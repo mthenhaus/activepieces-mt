@@ -34,6 +34,4 @@ ADD .. /app
 
 WORKDIR /app
 
-RUN npm install
-
 ENTRYPOINT [ "./docker-entrypoint.sh" ]
