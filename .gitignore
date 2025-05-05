@@ -7,14 +7,14 @@ tmp
 /out-tsc
 firebase-admin-sdk.json
 dev
-cache
+#cache
 .env
 
 # SDK Build
 builds
 
 # dependencies
-node_modules
+# node_modules
 
 # IDEs and editors
 /.idea
