@@ -77,52 +77,6 @@ async function runCommandWithLiveOutput(cmd: string): Promise<void> {
 }
 
 export async function piecesBuilder(app: FastifyInstance, io: Server, packages: string[], piecesSource: PiecesSource): Promise<void> {
-
-    const isFilePieces = piecesSource === PiecesSource.FILE
-    // Only run this script if the pieces source is file
-    if (!isFilePieces) return
-
-    const watchers: chokidar.FSWatcher[] = []
-
-    for (const packageName of packages) {
-        app.log.info(chalk.blue(`Starting watch for package: ${packageName}`))
-
-        const pieceDirectory = await filePiecesUtils(packages, app.log).findPieceDirectoryByFolderName(packageName)
-        if (isNil(pieceDirectory)) {
-            app.log.info(chalk.yellow(`Piece directory not found for package: ${packageName}`))
-            continue
-        }
-        app.log.info(chalk.yellow(`Found piece directory: ${pieceDirectory}`))
-
-        const pieceProjectName = `pieces-${packageName}`
-        const packageJsonName = await filePiecesUtils(packages, app.log).getPackageNameFromFolderPath(pieceDirectory)
-        const debouncedHandleFileChange = debounce(() => {
-            handleFileChange(packages, pieceProjectName, packageJsonName, io, app.log).catch(app.log.error)
-        }, 2000)
-
-        const watcher = chokidar.watch(resolve(pieceDirectory), {
-            ignored: [/^\./, /node_modules/, /dist/],
-            persistent: true,
-            ignoreInitial: true,
-            awaitWriteFinish: {
-                stabilityThreshold: 2000,
-                pollInterval: 200,
-            },
-        })
-        watcher.on('ready', debouncedHandleFileChange)
-        watcher.on('all', (event, path) => {
-            if (path.endsWith('.ts') || path.endsWith('package.json')) {
-                debouncedHandleFileChange()
-            }
-        })
-
-        watchers.push(watcher)
-    }
-
-
-    app.addHook('onClose', () => {
-        for (const watcher of watchers) {
-            watcher.close().catch(app.log.error)
-        }
-    })
+    // DISABLED - MET
+    return
 }
