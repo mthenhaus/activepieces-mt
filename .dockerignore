@@ -11,7 +11,5 @@
 .vscode
 builds
 deploy
-Dockerfile
 dist
-docs
-node_modules
+
