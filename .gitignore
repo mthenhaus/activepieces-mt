@@ -21,7 +21,7 @@ builds
 *.launch
 .settings/
 *.sublime-workspace
-cache
+#cache
 # IDE - VSCode
 .vscode/*
 !.vscode/settings.json
