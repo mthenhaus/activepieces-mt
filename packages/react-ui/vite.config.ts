@@ -25,6 +25,7 @@ export default defineConfig({
     },
     port: 4200,
     host: '0.0.0.0',
+    watch: null, // Disable Vite's file watching to avoid conflicts with Nx
   },
 
   preview: {
